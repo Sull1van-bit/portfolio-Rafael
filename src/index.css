@@ -1,50 +1,42 @@
 @import "tailwindcss";
 
-html, body {
+:root {
+  --primary: #32E0C4;
+  --secondary: #EEEEEE;
+  --accent: #0D7377;
+  --dark: #212121;
+}
+
+body {
   margin: 0;
-  padding: 0;
-  font-family: "Space Grotesk", sans-serif;
-  background: #2E2E2E;
-  color: #f3f4f6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--dark);
+  color: var(--secondary);
+  overflow-x: hidden;
 }
 
-@layer utilities {
-  @keyframes blink{
-    0%, 100%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-  }
-
-  .animate-blink{
-    animation: blink 0.8s step-end infinite;
-  
-  }
-
-  @keyframes loading {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(250%);
-    }
-  }
-
-  .animate-loading-bar{
-    animation: loading 1s ease infinite;
-    background-color: #D6CFE1;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
-.reveal{
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.reveal.visible{
-  opacity: 1;
-  transform: translateY(0);
+::-webkit-scrollbar-track {
+  background: var(--dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
