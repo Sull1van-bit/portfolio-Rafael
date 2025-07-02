@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 
 export function AboutSection() {
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div 
+      className="w-full max-w-2xl mx-auto"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -13,11 +17,11 @@ export function AboutSection() {
         
         <div className="space-y-6 text-[#EEEEEE]">
           <p className="text-lg">
-            Hello! I'm a passionate Front End developer with a strong focus on creating beautiful and functional user experiences. My journey in tech started with a deep curiosity about how digital solutions can solve real-world problems.
+            I'm a passionate frontend developer dedicated to creating beautiful, intuitive, and accessible user experiences. My journey began with a fascination for how thoughtful design and clean code can transform complex problems into elegant digital solutions.
           </p>
           
           <p className="text-lg">   
-            With expertise in modern frontend technologies like React, Tailwind, and CSS I build applications that are not only visually appealing but also performant and accessible.
+            I specialize in modern frontend technologies including React, TypeScript, and Tailwind CSS, building applications that seamlessly blend aesthetic appeal with exceptional performance and user accessibility.
           </p>
           
           <div className="mt-8">
@@ -25,18 +29,18 @@ export function AboutSection() {
             
             <div className="space-y-6">
               <div className="border-l-2 border-[#0D7377] pl-4">
-                <h4 className="text-xl font-medium text-[#EEEEEE]">Public Relation</h4>
-                <p className="text-[#32E0C4]">Himpunan Mahasiswa Informatika (HMIF) UMN • 2024 - present</p>
+                <h4 className="text-xl font-medium text-[#EEEEEE]">Public Relations Officer</h4>
+                <p className="text-[#32E0C4]">Himpunan Mahasiswa Informatika (HMIF) UMN • 2024 - Present</p>
                 <p className="mt-2">
-                  Managing social media accounts and creating engaging content to promote HMIF UMN 
+                  Lead social media strategy and content creation, driving engagement and brand awareness for the Computer Science Student Association at UMN.
                 </p>
               </div>
               
               <div className="border-l-2 border-[#0D7377] pl-4">
-                <h4 className="text-xl font-medium text-[#EEEEEE]">Front End Developer</h4>
-                <p className="text-[#32E0C4]">Radioactive UMN • 2025 - present</p>
+                <h4 className="text-xl font-medium text-[#EEEEEE]">Frontend Developer</h4>
+                <p className="text-[#32E0C4]">Radioactive UMN • 2025 - Present</p>
                 <p className="mt-2">
-                  Developed awarding night and podcast competition page with React, and Tailwind CSS.
+                  Developed dynamic web applications for awarding night and podcast competitions using React and Tailwind CSS, delivering responsive and engaging user experiences.
                 </p>
               </div>
             </div>
@@ -46,8 +50,11 @@ export function AboutSection() {
             <h3 className="text-2xl font-semibold mb-4 text-[#32E0C4]">Education</h3>
             
             <div className="border-l-2 border-[#0D7377] pl-4">
-              <h4 className="text-xl font-medium text-[#EEEEEE]">BSc in Computer Science</h4>
+              <h4 className="text-xl font-medium text-[#EEEEEE]">Bachelor of Computer Science</h4>
               <p className="text-[#32E0C4]">Universitas Multimedia Nusantara • 2024 - 2028</p>
+              <p className="mt-2 text-sm text-[#EEEEEE]/80">
+                Currently pursuing a comprehensive education in computer science with a focus on machine learning, blockchain, and web development.
+              </p>
             </div>
           </div>
         </div>

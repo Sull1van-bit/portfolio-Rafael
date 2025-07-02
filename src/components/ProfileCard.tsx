@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import React, { useEffect, useRef, useCallback, useMemo, useState } from "react";
 import "./ProfileCard.css";
 
 interface ProfileCardProps {
@@ -71,9 +71,23 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth <= 768 || 'ontouchstart' in window;
+  });
+
+  // Update mobile detection on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const animationHandlers = useMemo(() => {
-    if (!enableTilt) return null;
+    if (!enableTilt || isMobile) return null;
 
     let rafId: number | null = null;
 
@@ -132,6 +146,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
         if (progress < 1) {
           rafId = requestAnimationFrame(animationLoop);
+        } else {
+          // Ensure we end exactly at the center position
+          updateCardTransform(targetX, targetY, card, wrap);
         }
       };
 
@@ -148,7 +165,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         }
       },
     };
-  }, [enableTilt]);
+  }, [enableTilt, isMobile]);
 
   const handlePointerMove = useCallback(
     (event: PointerEvent) => {
@@ -186,10 +203,15 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
       if (!card || !wrap || !animationHandlers) return;
 
+      // Get the current pointer position relative to the card
+      const rect = card.getBoundingClientRect();
+      const currentX = event.clientX - rect.left;
+      const currentY = event.clientY - rect.top;
+
       animationHandlers.createSmoothAnimation(
         ANIMATION_CONFIG.SMOOTH_DURATION,
-        event.offsetX,
-        event.offsetY,
+        currentX,
+        currentY,
         card,
         wrap
       );
@@ -200,7 +222,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   );
 
   useEffect(() => {
-    if (!enableTilt || !animationHandlers) return;
+    if (!enableTilt || !animationHandlers || isMobile) return;
 
     const card = cardRef.current;
     const wrap = wrapRef.current;
@@ -235,6 +257,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     };
   }, [
     enableTilt,
+    isMobile,
     animationHandlers,
     handlePointerMove,
     handlePointerEnter,
@@ -266,7 +289,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     >
       <section ref={cardRef} className="pc-card">
         <div className="pc-inside">
-          <div className="pc-shine" />
           <div className="pc-glare" />
           <div className="pc-content pc-avatar-content">
             <img

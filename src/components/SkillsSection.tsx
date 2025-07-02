@@ -3,30 +3,35 @@ import { motion } from 'framer-motion';
 
 export function SkillsSection() {
   const skills = {
-    "Frontend": [
+    "Frontend Development": [
       { name: "React", level: 90 },
       { name: "TypeScript", level: 85 },
       { name: "JavaScript", level: 90 },
       { name: "HTML/CSS", level: 95 },
       { name: "Tailwind CSS", level: 85 },
     ],
-    "Backend": [
+    "Backend & Database": [
       { name: "Firebase", level: 20 },
     ],
-    "Tools": [
+    "Development Tools": [
       { name: "Git", level: 90 },
       { name: "VS Code", level: 90 },
     ]
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div 
+      className="w-full max-w-4xl mx-auto"
+      data-aos="fade-right"
+      data-aos-duration="1000"
+      data-aos-delay="300"
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-4xl font-bold mb-8 text-[#32E0C4]">Skills</h2>
+        <h2 className="text-4xl font-bold mb-8 text-[#32E0C4]">Technical Expertise</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.entries(skills).map(([category, categorySkills], categoryIndex) => (

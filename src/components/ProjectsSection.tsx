@@ -1,11 +1,12 @@
 
 import { motion } from 'framer-motion';
+import StarBorder from './StarBorder';
 
 export function ProjectsSection() {
   const projects = [
     {
       title: "The Forgotten Chronicle",
-      description: "A medieval life simulation game where players can explore, farm, and play minigames. This project is created for the Introduction to Internet Technology course at Universitas Multimedia Nusantara.",
+      description: "An immersive medieval life simulation game featuring exploration, farming mechanics, and interactive mini-games. Built as part of the Introduction to Internet Technology course, this project showcases advanced React development and Firebase integration.",
       image: "/game.png",
       tags: ["React", "Firebase", "Tailwind CSS"],
       link: "https://heartandcrown.vercel.app"
@@ -13,13 +14,18 @@ export function ProjectsSection() {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div 
+      className="w-full max-w-4xl mx-auto"
+      data-aos="fade-left"
+      data-aos-duration="1000"
+      data-aos-delay="200"
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-4xl font-bold mb-8 text-[#32E0C4]">Projects</h2>
+        <h2 className="text-4xl font-bold mb-8 text-[#32E0C4]">Featured Projects</h2>
         
         <div className="flex justify-center">
           <div className="w-full max-w-md">
@@ -52,11 +58,13 @@ export function ProjectsSection() {
                   </div>
                   <a 
                     href={project.link} 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center text-[#32E0C4] hover:text-[#EEEEEE] transition-colors duration-300"
                   >
-                    View Project
+                    Explore Project
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 </div>
@@ -66,14 +74,17 @@ export function ProjectsSection() {
         </div>
 
         <div className="text-center mt-10">
-          <a 
-            href="https://github.com/Sull1van-bit" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="inline-block bg-[#0D7377] hover:bg-[#32E0C4] text-[#EEEEEE] hover:text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300"
+          <StarBorder
+            as="a"
+            href="https://github.com/Sull1van-bit"
+            target="_blank"
+            rel="noopener noreferrer"
+            color="#32E0C4"
+            speed="6s"
+            variant="github"
           >
-            View More on GitHub
-          </a>
+            Discover More Projects
+          </StarBorder>
         </div>
       </motion.div>
     </div>
