@@ -13,11 +13,11 @@ export function AboutSection() {
         
         <div className="space-y-6 text-[#EEEEEE]">
           <p className="text-lg">
-            Hello! I'm a passionate software developer with a strong focus on creating beautiful and functional user experiences. My journey in tech started with a deep curiosity about how digital solutions can solve real-world problems.
+            Hello! I'm a passionate Front End developer with a strong focus on creating beautiful and functional user experiences. My journey in tech started with a deep curiosity about how digital solutions can solve real-world problems.
           </p>
           
           <p className="text-lg">   
-            With expertise in modern frontend technologies like React, TypeScript, and Framer Motion, I build applications that are not only visually appealing but also performant and accessible.
+            With expertise in modern frontend technologies like React, Tailwind, and CSS I build applications that are not only visually appealing but also performant and accessible.
           </p>
           
           <div className="mt-8">
@@ -25,26 +25,18 @@ export function AboutSection() {
             
             <div className="space-y-6">
               <div className="border-l-2 border-[#0D7377] pl-4">
-                <h4 className="text-xl font-medium text-[#EEEEEE]">Senior Frontend Developer</h4>
-                <p className="text-[#32E0C4]">Tech Company • 2022 - Present</p>
+                <h4 className="text-xl font-medium text-[#EEEEEE]">Public Relation</h4>
+                <p className="text-[#32E0C4]">Himpunan Mahasiswa Informatika (HMIF) UMN • 2024 - present</p>
                 <p className="mt-2">
-                  Leading frontend development for a SaaS platform with React and TypeScript. Implemented responsive designs and improved performance by 40%.
+                  Managing social media accounts and creating engaging content to promote HMIF UMN 
                 </p>
               </div>
               
               <div className="border-l-2 border-[#0D7377] pl-4">
-                <h4 className="text-xl font-medium text-[#EEEEEE]">Web Developer</h4>
-                <p className="text-[#32E0C4]">Design Studio • 2019 - 2022</p>
+                <h4 className="text-xl font-medium text-[#EEEEEE]">Front End Developer</h4>
+                <p className="text-[#32E0C4]">Radioactive UMN • 2025 - present</p>
                 <p className="mt-2">
-                  Developed interactive websites for clients across various industries. Collaborated with designers to create pixel-perfect implementations.
-                </p>
-              </div>
-              
-              <div className="border-l-2 border-[#0D7377] pl-4">
-                <h4 className="text-xl font-medium text-[#EEEEEE]">Frontend Intern</h4>
-                <p className="text-[#32E0C4]">Startup • 2018 - 2019</p>
-                <p className="mt-2">
-                  Assisted in building UI components and implementing designs for a mobile-first web application.
+                  Developed awarding night and podcast competition page with React, and Tailwind CSS.
                 </p>
               </div>
             </div>
@@ -55,10 +47,7 @@ export function AboutSection() {
             
             <div className="border-l-2 border-[#0D7377] pl-4">
               <h4 className="text-xl font-medium text-[#EEEEEE]">BSc in Computer Science</h4>
-              <p className="text-[#32E0C4]">University Name • 2015 - 2019</p>
-              <p className="mt-2">
-                Focused on web technologies and software engineering. Graduated with honors.
-              </p>
+              <p className="text-[#32E0C4]">Universitas Multimedia Nusantara • 2024 - 2028</p>
             </div>
           </div>
         </div>

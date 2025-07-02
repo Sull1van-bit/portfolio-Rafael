@@ -1,13 +1,13 @@
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { ProfileCard } from './components/ProfileCard';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import ProfileCard from './components/ProfileCard';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { SkillsSection } from './components/SkillsSection';
 import { Dock } from './components/Dock';
 
-// Icons for the dock
-import { FaHome, FaUser, FaBriefcase, FaCode, FaEnvelope } from 'react-icons/fa';
+// Icons for the dock and mobile menu
+import { FaHome, FaUser, FaBriefcase, FaCode, FaEnvelope, FaBars, FaTimes } from 'react-icons/fa';
 
 function App() {
   // Define refs for scrolling
@@ -17,10 +17,23 @@ function App() {
   const skillsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
 
+  // Mobile menu state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   // Scroll to section function
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
+    setIsMobileMenuOpen(false); // Close mobile menu after navigation
   };
+
+  // Navigation items
+  const navItems = [
+    { icon: <FaHome className="w-6 h-6 text-[#32E0C4]" />, label: "Home", onClick: () => scrollToSection(homeRef) },
+    { icon: <FaUser className="w-6 h-6 text-[#32E0C4]" />, label: "About", onClick: () => scrollToSection(aboutRef) },
+    { icon: <FaBriefcase className="w-6 h-6 text-[#32E0C4]" />, label: "Projects", onClick: () => scrollToSection(projectsRef) },
+    { icon: <FaCode className="w-6 h-6 text-[#32E0C4]" />, label: "Skills", onClick: () => scrollToSection(skillsRef) },
+    { icon: <FaEnvelope className="w-6 h-6 text-[#32E0C4]" />, label: "Contact", onClick: () => scrollToSection(contactRef) }
+  ];
 
   return (
     <div className="bg-[#212121] text-[#EEEEEE] min-h-screen relative">
@@ -32,27 +45,27 @@ function App() {
           id="home" 
           className="min-h-screen flex flex-col justify-center p-8"
         >
-          <div className="container mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="container mx-auto max-w-7xl">
+            <div className="flex flex-col md:flex-row items-center justify-end gap-8 md:gap-20">
               {/* Text Content */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="md:w-1/2"
+                className="md:w-2/5 md:ml-auto"
               >
                 <h1 className="text-5xl md:text-7xl font-bold mb-4 text-[#32E0C4]">Hi, I'm <span className="text-[#EEEEEE]">Rafael</span></h1>
                 <p className="text-xl md:text-2xl mb-8 text-[#EEEEEE]">Front End Developer specializing in modern web technologies.</p>
                 <div className="flex flex-wrap gap-4">
                   <button 
                     onClick={() => scrollToSection(aboutRef)}
-                    className="bg-[#32E0C4] hover:bg-[#0D7377] text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300"
+                    className="bg-[#32E0C4] hover:bg-[#0D7377] text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300 cursor-pointer"
                   >
                     About Me
                   </button>
                   <button 
                     onClick={() => scrollToSection(projectsRef)}
-                    className="border-2 border-[#32E0C4] text-[#32E0C4] hover:bg-[#32E0C4] hover:text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300"
+                    className="border-2 border-[#32E0C4] text-[#32E0C4] hover:bg-[#32E0C4] hover:text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300 cursor-pointer"
                   >
                     Projects
                   </button>
@@ -64,16 +77,16 @@ function App() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="md:w-1/2 flex justify-center"
+                className="md:w-2/5 flex justify-center md:justify-end"
               >
                 <div className="w-full max-w-sm">
-                  <ProfileCard 
-                    avatarUrl="/avatar-placeholder.jpg"
-                    name="Rafael"
+                  <ProfileCard
+                    name="Rafael Romelo G."
                     title="Front End Developer"
-                    handle="rafael-dev"
-                    status="Available for hire"
-                    showUserInfo={true}
+                    status="Open to opportunities"
+                    contactText="Contact Me"
+                    avatarUrl="muka.png"
+                    showUserInfo={false}
                     enableTilt={true}
                     onContactClick={() => scrollToSection(contactRef)}
                     behindGradient={`radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),hsla(173,100%,90%,var(--card-opacity)) 4%,hsla(173,50%,80%,calc(var(--card-opacity)*0.75)) 10%,hsla(173,25%,70%,calc(var(--card-opacity)*0.5)) 50%,hsla(173,0%,60%,0) 100%),radial-gradient(35% 52% at 55% 20%,#32E0C4c4 0%,#0D737700 100%),radial-gradient(100% 100% at 50% 50%,#32E0C4ff 1%,#0D737700 76%),conic-gradient(from 124deg at 50% 50%,#32E0C4ff 0%,#0D7377ff 40%,#0D7377ff 60%,#32E0C4ff 100%)`}
@@ -154,7 +167,7 @@ function App() {
                   </div>
                   <button 
                     type="submit"
-                    className="bg-[#32E0C4] hover:bg-[#0D7377] text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300"
+                    className="bg-[#32E0C4] hover:bg-[#0D7377] text-[#212121] font-bold py-2 px-6 rounded-full transition duration-300 cursor-pointer"
                   >
                     Send Message
                   </button>
@@ -164,20 +177,68 @@ function App() {
           </section>
         </div>
 
-      {/* Dock Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
+      {/* Mobile Hamburger Menu */}
+      <div className="md:hidden">
+        {/* Hamburger Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="fixed top-4 right-4 z-50 bg-[#212121] border-2 border-[#0D7377] rounded-lg p-3 cursor-pointer"
+        >
+          {isMobileMenuOpen ? (
+            <FaTimes className="w-6 h-6 text-[#32E0C4]" />
+          ) : (
+            <FaBars className="w-6 h-6 text-[#32E0C4]" />
+          )}
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-[#212121]/95 backdrop-blur-md z-40"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ duration: 0.3, type: 'tween' }}
+                className="absolute right-0 top-0 h-full w-64 bg-[#212121] border-l-2 border-[#0D7377] shadow-xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex flex-col items-center justify-center h-full space-y-8 p-8">
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={item.onClick}
+                      className="flex items-center space-x-4 text-[#EEEEEE] hover:text-[#32E0C4] transition-colors duration-300 cursor-pointer"
+                    >
+                      {item.icon}
+                      <span className="text-lg font-medium">{item.label}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Desktop Dock Navigation */}
+      <div className="hidden md:block fixed bottom-0 left-0 right-0 z-50">
         <Dock
-          items={[
-            { icon: <FaHome className="w-6 h-6 text-[#32E0C4]" />, label: "Home", onClick: () => scrollToSection(homeRef) },
-            { icon: <FaUser className="w-6 h-6 text-[#32E0C4]" />, label: "About", onClick: () => scrollToSection(aboutRef) },
-            { icon: <FaBriefcase className="w-6 h-6 text-[#32E0C4]" />, label: "Projects", onClick: () => scrollToSection(projectsRef) },
-            { icon: <FaCode className="w-6 h-6 text-[#32E0C4]" />, label: "Skills", onClick: () => scrollToSection(skillsRef) },
-            { icon: <FaEnvelope className="w-6 h-6 text-[#32E0C4]" />, label: "Contact", onClick: () => scrollToSection(contactRef) }
-          ]}
+          items={navItems}
           className="bg-[#212121]/80 backdrop-blur-md border-[#0D7377]"
-          panelHeight={48}
-          baseItemSize={40}
-          magnification={56}
+          panelHeight={45}
+          baseItemSize={54}
+          magnification={70}
         />
       </div>
     </div>

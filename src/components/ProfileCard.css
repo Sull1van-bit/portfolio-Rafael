@@ -13,12 +13,12 @@
   --icon: none;
   --behind-gradient: none;
   --inner-gradient: none;
-  --sunpillar-1: hsl(173, 100%, 73%);
-  --sunpillar-2: hsl(173, 100%, 69%);
-  --sunpillar-3: hsl(173, 100%, 69%);
-  --sunpillar-4: hsl(173, 100%, 76%);
-  --sunpillar-5: hsl(173, 100%, 74%);
-  --sunpillar-6: hsl(173, 100%, 73%);
+  --sunpillar-1: hsl(2, 100%, 73%);
+  --sunpillar-2: hsl(53, 100%, 69%);
+  --sunpillar-3: hsl(93, 100%, 69%);
+  --sunpillar-4: hsl(176, 100%, 76%);
+  --sunpillar-5: hsl(228, 100%, 74%);
+  --sunpillar-6: hsl(283, 100%, 73%);
   --sunpillar-clr-1: var(--sunpillar-1);
   --sunpillar-clr-2: var(--sunpillar-2);
   --sunpillar-clr-3: var(--sunpillar-3);
@@ -61,7 +61,7 @@
 }
 
 .pc-card {
-  height: 80vh;
+  height: 80svh;
   max-height: 540px;
   display: grid;
   aspect-ratio: 0.718;
@@ -74,7 +74,7 @@
   transform: translate3d(0, 0, 0.1px) rotateX(0deg) rotateY(0deg);
   background-size: 100% 100%;
   background-position: 0 0, 0 0, 50% 50%, 0 0;
-  background-image: radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), hsla(173, 100%, 90%, var(--card-opacity)) 4%, hsla(173, 50%, 80%, calc(var(--card-opacity) * 0.75)) 10%, hsla(173, 25%, 70%, calc(var(--card-opacity) * 0.5)) 50%, hsla(173, 0%, 60%, 0) 100%), radial-gradient(35% 52% at 55% 20%, #32E0C4c4 0%, #0D737700 100%), radial-gradient(100% 100% at 50% 50%, #32E0C4ff 1%, #0D737700 76%), conic-gradient(from 124deg at 50% 50%, #32E0C4ff 0%, #0D7377ff 40%, #0D7377ff 60%, #32E0C4ff 100%);
+  background-image: radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y), hsla(266, 100%, 90%, var(--card-opacity)) 4%, hsla(266, 50%, 80%, calc(var(--card-opacity) * 0.75)) 10%, hsla(266, 25%, 70%, calc(var(--card-opacity) * 0.5)) 50%, hsla(266, 0%, 60%, 0) 100%), radial-gradient(35% 52% at 55% 20%, #00ffaac4 0%, #073aff00 100%), radial-gradient(100% 100% at 50% 50%, #00c1ffff 1%, #073aff00 76%), conic-gradient(from 124deg at 50% 50%, #c137ffff 0%, #07c6ffff 40%, #07c6ffff 60%, #c137ffff 100%);
   overflow: hidden;
 }
 
@@ -170,7 +170,7 @@
 .pc-glare {
   transform: translate3d(0, 0, 1.1px);
   overflow: hidden;
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(173, 25%, 80%) 12%, hsla(173, 40%, 30%, 0.8) 90%);
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(248, 25%, 80%) 12%, hsla(207, 40%, 30%, 0.8) 90%);
   mix-blend-mode: overlay;
   filter: brightness(0.8) contrast(1.2);
   z-index: 4;
@@ -213,9 +213,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(13, 115, 119, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
-  border: 1px solid rgba(50, 224, 196, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 12px 14px;
   pointer-events: auto;
@@ -232,7 +232,7 @@
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(50, 224, 196, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   flex-shrink: 0;
 }
 
@@ -253,32 +253,30 @@
 .pc-handle {
   font-size: 14px;
   font-weight: 500;
-  color: rgba(238, 238, 238, 0.9);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1;
 }
 
 .pc-status {
   font-size: 14px;
-  color: rgba(50, 224, 196, 0.9);
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1;
 }
 
 .pc-contact-btn {
-  border: 1px solid rgba(50, 224, 196, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(238, 238, 238, 0.9);
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
-  background-color: rgba(13, 115, 119, 0.2);
 }
 
 .pc-contact-btn:hover {
-  border-color: rgba(50, 224, 196, 0.8);
-  background-color: rgba(50, 224, 196, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-1px);
   transition: all 0.2s ease;
 }
@@ -304,9 +302,9 @@
 .pc-details h3 {
   font-weight: 600;
   margin: 0;
-  font-size: min(5vh, 3em);
+  font-size: min(5svh, 3em);
   margin: 0;
-  background-image: linear-gradient(to bottom, #EEEEEE, #32E0C4);
+  background-image: linear-gradient(to bottom, #fff, #6f6fbe);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -321,7 +319,7 @@
   font-size: 16px;
   margin: 0 auto;
   width: min-content;
-  background-image: linear-gradient(to bottom, #EEEEEE, #0D7377);
+  background-image: linear-gradient(to bottom, #fff, #4a4ac0);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -350,7 +348,7 @@
 
 @media (max-width: 768px) {
   .pc-card {
-    height: 70vh;
+    height: 70svh;
     max-height: 450px;
   }
 
@@ -359,7 +357,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(4vh, 2.5em);
+    font-size: min(4svh, 2.5em);
   }
 
   .pc-details p {
@@ -398,7 +396,7 @@
 
 @media (max-width: 480px) {
   .pc-card {
-    height: 60vh;
+    height: 60svh;
     max-height: 380px;
   }
 
@@ -407,7 +405,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(3.5vh, 2em);
+    font-size: min(3.5svh, 2em);
   }
 
   .pc-details p {
@@ -443,6 +441,49 @@
   .pc-contact-btn {
     padding: 5px 10px;
     font-size: 10px;
+    border-radius: 50px;
+  }
+}
+
+@media (max-width: 320px) {
+  .pc-card {
+    height: 55svh;
+    max-height: 320px;
+  }
+
+  .pc-details h3 {
+    font-size: min(3svh, 1.5em);
+  }
+
+  .pc-details p {
+    font-size: 11px;
+  }
+
+  .pc-user-info {
+    padding: 6px 8px;
+    border-radius: 50px;
+  }
+
+  .pc-mini-avatar {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pc-user-details {
+    gap: 6px;
+  }
+
+  .pc-handle {
+    font-size: 11px;
+  }
+
+  .pc-status {
+    font-size: 8px;
+  }
+
+  .pc-contact-btn {
+    padding: 4px 8px;
+    font-size: 9px;
     border-radius: 50px;
   }
 }

@@ -83,7 +83,7 @@ function DockItem({
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
-      className={`relative inline-flex items-center justify-center rounded-full bg-[#212121] border-[#0D7377] border-2 shadow-md ${className}`}
+      className={`relative inline-flex items-center justify-center rounded-full bg-[#212121] border-[#0D7377] border-2 shadow-md cursor-pointer ${className}`}
       tabIndex={0}
       role="button"
       aria-haspopup="true"
@@ -150,11 +150,11 @@ export function Dock({
   items,
   className = "",
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
-  magnification = 70,
+  magnification = 25,
   distance = 200,
-  panelHeight = 64,
-  dockHeight = 256,
-  baseItemSize = 50,
+  panelHeight = 25,
+  dockHeight = 25,
+  baseItemSize = 25,
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);

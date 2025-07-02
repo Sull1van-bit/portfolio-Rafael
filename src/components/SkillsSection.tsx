@@ -9,20 +9,12 @@ export function SkillsSection() {
       { name: "JavaScript", level: 90 },
       { name: "HTML/CSS", level: 95 },
       { name: "Tailwind CSS", level: 85 },
-      { name: "Framer Motion", level: 80 },
     ],
     "Backend": [
-      { name: "Node.js", level: 75 },
-      { name: "Express", level: 70 },
-      { name: "MongoDB", level: 65 },
-      { name: "SQL", level: 60 },
-      { name: "GraphQL", level: 60 },
+      { name: "Firebase", level: 20 },
     ],
     "Tools": [
-      { name: "Git", level: 85 },
-      { name: "Webpack", level: 70 },
-      { name: "Docker", level: 60 },
-      { name: "Figma", level: 75 },
+      { name: "Git", level: 90 },
       { name: "VS Code", level: 90 },
     ]
   };
@@ -76,45 +68,15 @@ export function SkillsSection() {
         <div className="mt-12">
           <h3 className="text-2xl font-bold mb-6 text-[#32E0C4]">Certifications</h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <motion.div
               className="bg-[#212121] border border-[#0D7377] rounded-lg p-6"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">React Advanced Developer</h4>
-              <p className="text-[#32E0C4]">Meta • 2022</p>
-            </motion.div>
-            
-            <motion.div
-              className="bg-[#212121] border border-[#0D7377] rounded-lg p-6"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">Full Stack Web Developer</h4>
-              <p className="text-[#32E0C4]">Udacity • 2021</p>
-            </motion.div>
-            
-            <motion.div
-              className="bg-[#212121] border border-[#0D7377] rounded-lg p-6"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">UI/UX Design Fundamentals</h4>
-              <p className="text-[#32E0C4]">Google • 2020</p>
-            </motion.div>
-            
-            <motion.div
-              className="bg-[#212121] border border-[#0D7377] rounded-lg p-6"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">AWS Cloud Practitioner</h4>
-              <p className="text-[#32E0C4]">Amazon Web Services • 2019</p>
+              <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">Full Stack Web Development Bootcamp</h4>
+              <p className="text-[#32E0C4]">Udemy</p>
             </motion.div>
           </div>
         </div>
