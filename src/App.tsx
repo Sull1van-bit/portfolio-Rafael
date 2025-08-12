@@ -60,7 +60,8 @@ function App() {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] text-[#EEEEEE] min-h-screen relative overflow-hidden">
+    // NOTE: Changed overflow-hidden to overflow-x-hidden so vertical scrolling works on mobile.
+    <div className="bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] text-[#EEEEEE] min-h-screen relative overflow-x-hidden">
       {/* Animated Grid Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e]"></div>

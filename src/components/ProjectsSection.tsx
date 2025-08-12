@@ -76,6 +76,8 @@ export function ProjectsSection() {
         <style>{`
             .embla {
                 overflow: hidden;
+                /* Allow vertical scroll gestures to bubble (horizontal only carousel) */
+                touch-action: pan-y pinch-zoom;
             }
             .embla__container {
                 display: flex;
