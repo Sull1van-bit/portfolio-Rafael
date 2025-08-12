@@ -17,11 +17,11 @@ export function AboutSection() {
         
         <div className="space-y-6 text-[#EEEEEE]">
           <p className="text-lg">
-            I'm a passionate frontend developer dedicated to creating beautiful, intuitive, and accessible user experiences. My journey began with a fascination for how thoughtful design and clean code can transform complex problems into elegant digital solutions.
+            Garuda Hacks 6.0 Finalist and skilled front-end developer with hands-on experience building user interfaces with React and Tailwind CSS.
           </p>
           
           <p className="text-lg">   
-            I specialize in modern frontend technologies including React, TypeScript, and Tailwind CSS, building applications that seamlessly blend aesthetic appeal with exceptional performance and user accessibility.
+            Currently expanding my expertise into Machine Learning and seeking a challenging role where I can contribute my software engineering foundation while developing practical skills in data science and AI.
           </p>
           
           <div className="mt-8">

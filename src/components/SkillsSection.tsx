@@ -4,18 +4,19 @@ import { motion } from 'framer-motion';
 export function SkillsSection() {
   const skills = {
     "Frontend Development": [
-      { name: "React", level: 90 },
-      { name: "TypeScript", level: 85 },
-      { name: "JavaScript", level: 90 },
       { name: "HTML/CSS", level: 95 },
+      { name: "React", level: 90 },
+      { name: "JavaScript", level: 90 },
+      { name: "TypeScript", level: 85 },
       { name: "Tailwind CSS", level: 85 },
     ],
     "Backend & Database": [
       { name: "Firebase", level: 20 },
     ],
     "Development Tools": [
+      { name: "VS Code", level: 100 },
       { name: "Git", level: 90 },
-      { name: "VS Code", level: 90 },
+      { name: "Vite", level: 90 },
     ]
   };
 
@@ -82,6 +83,15 @@ export function SkillsSection() {
             >
               <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">Full Stack Web Development Bootcamp</h4>
               <p className="text-[#32E0C4]">Udemy</p>
+            </motion.div>
+            <motion.div
+              className="bg-[#212121] border border-[#0D7377] rounded-lg p-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <h4 className="text-xl font-semibold mb-2 text-[#EEEEEE]">Finalist At Garuda Hacks 6.0</h4>
+              <p className="text-[#32E0C4]">Garuda Hacks</p>
             </motion.div>
           </div>
         </div>

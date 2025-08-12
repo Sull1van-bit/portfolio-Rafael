@@ -81,9 +81,8 @@ function DockItem({
       onHoverStart={() => isHovered.set(1)}
       onHoverEnd={() => isHovered.set(0)}
       onFocus={() => isHovered.set(1)}
-      onBlur={() => isHovered.set(0)}
       onClick={onClick}
-      className={`relative inline-flex items-center justify-center rounded-full bg-[#212121] border-[#0D7377] border-2 shadow-md cursor-pointer ${className}`}
+      className={`relative inline-flex items-center justify-center rounded-full bg-[#212121] border-[#0D7377] border-2 cursor-pointer ${className}`}
       tabIndex={0}
       role="button"
       aria-haspopup="true"
@@ -204,3 +203,6 @@ export function Dock({
     </motion.div>
   );
 }
+
+// You would typically export the Dock component to use it in your application
+// export default Dock;
