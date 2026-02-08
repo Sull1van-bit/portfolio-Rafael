@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 
 const DEFAULT_INNER_GRADIENT = 'linear-gradient(145deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%)';
 
@@ -81,8 +81,25 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   const enterTimerRef = useRef<number | null>(null);
   const leaveRafRef = useRef<number | null>(null);
 
+  // Detect mobile device
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth <= 768 || 'ontouchstart' in window;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Disable tilt on mobile
+  const shouldEnableTilt = enableTilt && !isMobile;
+
   const tiltEngine = useMemo<TiltEngine | null>(() => {
-    if (!enableTilt) return null;
+    if (!shouldEnableTilt) return null;
 
     let rafId: number | null = null;
     let running = false;
@@ -191,7 +208,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         lastTs = 0;
       }
     };
-  }, [enableTilt]);
+  }, [shouldEnableTilt]);
 
   const getOffsets = (evt: PointerEvent, el: HTMLElement): { x: number; y: number } => {
     const rect = el.getBoundingClientRect();
@@ -269,7 +286,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   );
 
   useEffect(() => {
-    if (!enableTilt || !tiltEngine) return;
+    if (!shouldEnableTilt || !tiltEngine) return;
 
     const shell = shellRef.current;
     if (!shell) return;
@@ -321,7 +338,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       shell.classList.remove('entering');
     };
   }, [
-    enableTilt,
+    shouldEnableTilt,
     enableMobileTilt,
     tiltEngine,
     handlePointerMove,
