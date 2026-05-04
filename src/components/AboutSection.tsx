@@ -12,17 +12,25 @@ export function AboutSection() {
 
         <div className="space-y-6 text-gray-600">
           <p className="text-lg leading-relaxed">
-            Computer Science Student and Full Stack Developer with a hands-on experience in building web applications trough projects and freelancing.
+            I am a Computer Science student with a strong foundation in software engineering and a passion for building innovative solutions. I specialize in full-stack development, with hands-on experience in creating web applications through various projects and freelancing opportunities.
           </p>
 
           <p className="text-lg leading-relaxed">
-            Currently expanding my expertise into Machine Learning and seeking a challenging role where I can contribute my software engineering foundation while developing practical skills in data science and AI.
+            Currently, I am expanding my expertise into Machine Learning and AI, eager to apply my technical skills to real-world challenges in this domain. I am seeking a dynamic environment where I can contribute to meaningful projects while continuously developing my skills in data science and artificial intelligence.
           </p>
 
           <div className="mt-12">
             <h3 className="text-2xl font-semibold mb-6 text-gray-900">Experience</h3>
 
             <div className="space-y-8">
+              <div className="border-l-2 border-gray-300 pl-6">
+                <h4 className="text-xl font-medium text-gray-900">Fullstack Developer</h4>
+                <p className="text-gray-500 mt-1">Fortius Esports • March 2026 - Present</p>
+                <p className="mt-3 text-gray-600 leading-relaxed">
+                  Developed Fortinews, a centralized news platform for the Fortius community to access real-time updates, tournament schedules, and exclusive articles. Engineered both the frontend and backend architecture to ensure a seamless reading experience across all devices.
+                </p>
+              </div>
+
               <div className="border-l-2 border-gray-300 pl-6">
                 <h4 className="text-xl font-medium text-gray-900">Head of Finance</h4>
                 <p className="text-gray-500 mt-1">Himpunan Mahasiswa Informatika (HMIF) UMN • September 2025 - Present</p>

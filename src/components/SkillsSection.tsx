@@ -3,23 +3,33 @@ import { motion } from 'framer-motion';
 export function SkillsSection() {
   const skills = {
     "Frontend Development": [
-      { name: "HTML/CSS", level: 95 },
-      { name: "React", level: 90 },
-      { name: "JavaScript", level: 90 },
-      { name: "TypeScript", level: 85 },
-      { name: "Tailwind CSS", level: 85 },
+      { name: "React JS", level: 100 },
+      { name: "Next JS", level: 100 },
+      { name: "Kotlin", level: 90 },
+      { name: "React Native", level: 80 },
+      { name: "Vue JS", level: 70 }
     ],
     "Backend & Database": [
-      { name: "Firebase", level: 100 },
-      { name: "Node.js", level: 80 },
-      { name: "SQL", level: 80 },
-      { name: "MongoDB", level: 75 },
-      { name: "Next.js", level: 60 },
+     { name : "Node JS", level: 100},
+     { name: "Express JS", level: 100},
+     { name: "MySQL", level: 100},
+     { name: "Python", level: 90},
+     { name: "FastAPI", level: 90},
+     { name: "Golang", level: 85},
+     { name: "MongoDB", level: 80},
+     { name: "C/C++", level: 60},
     ],
     "Development Tools": [
-      { name: "Git", level: 100 },
-      { name: "Vite", level: 100 },
-      { name: "Postman", level: 100 },
+      { name: "Git", level: 100},
+      { name: "Postman", level: 100},
+      { name: "NPM/PNPM", level: 100},
+      { name: "N8N", level: 80},
+    ],
+    "DevOps": [
+      { name: "Docker", level: 80},
+      { name: "Kubernetes", level: 60},
+      { name: "AWS", level: 70},
+      { name: "GCP", level: 70},
     ]
   };
 

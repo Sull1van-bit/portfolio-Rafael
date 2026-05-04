@@ -90,7 +90,7 @@ function App() {
                   transition={{ duration: 0.6, delay: 0.2 }}
                   className="md:w-2/5 flex justify-center md:justify-end px-4 md:px-0"
                 >
-                  <div className="w-full max-w-sm">
+                  <div className="w-full max-w-sm" style={{ pointerEvents: 'none', userSelect: 'none' }}>
                     <ProfileCard
                       name="Rafael Romelo G."
                       title="Fullstack Developer"
