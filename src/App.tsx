@@ -347,60 +347,66 @@ function App() {
                   <div>
                     <h1 className="sr-only">Rafael Romelo Gibran, software engineer</h1>
                     <div className="hidden sm:block h-28 lg:h-32 xl:h-36 w-full -ml-4 sm:-ml-6 lg:-ml-8 text-[var(--ink)]">
-                      <TechText
-                        text="Rafael Romelo Gibran"
-                        align="left"
-                        fontFamily="'Instrument Serif', Georgia, serif"
-                        fontSize={116}
-                        fontWeight={400}
-                        letterSpacing={-0.01}
-                        color={theme === 'dark' ? '#f2f1ee' : '#121316'}
-                        accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
-                        lineStyle="dashed"
-                        intro={isIntroDocked ? 'metrics' : 'none'}
-                        introDuration={1.8}
-                        guides={false}
-                        labels={false}
-                        selection={true}
-                      />
+                      {isIntroDocked && (
+                        <TechText
+                          text="Rafael Romelo Gibran"
+                          align="left"
+                          fontFamily="'Instrument Serif', Georgia, serif"
+                          fontSize={116}
+                          fontWeight={400}
+                          letterSpacing={-0.01}
+                          color={theme === 'dark' ? '#f2f1ee' : '#121316'}
+                          accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
+                          lineStyle="dashed"
+                          intro="metrics"
+                          introDuration={1.8}
+                          guides={false}
+                          labels={false}
+                          selection={true}
+                        />
+                      )}
                     </div>
                     <div className="block sm:hidden w-full space-y-1 text-[var(--ink)] -ml-2">
-                      <div className="h-16 w-full">
-                        <TechText
-                          text="Rafael Romelo"
-                          align="left"
-                          fontFamily="'Instrument Serif', Georgia, serif"
-                          fontSize={78}
-                          fontWeight={400}
-                          letterSpacing={-0.01}
-                          color={theme === 'dark' ? '#f2f1ee' : '#121316'}
-                          accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
-                          lineStyle="dashed"
-                          intro={isIntroDocked ? 'metrics' : 'none'}
-                          introDuration={1.8}
-                          guides={false}
-                          labels={false}
-                          selection={true}
-                        />
-                      </div>
-                      <div className="h-14 w-full">
-                        <TechText
-                          text="Gibran"
-                          align="left"
-                          fontFamily="'Instrument Serif', Georgia, serif"
-                          fontSize={78}
-                          fontWeight={400}
-                          letterSpacing={-0.01}
-                          color={theme === 'dark' ? '#f2f1ee' : '#121316'}
-                          accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
-                          lineStyle="dashed"
-                          intro={isIntroDocked ? 'metrics' : 'none'}
-                          introDuration={1.8}
-                          guides={false}
-                          labels={false}
-                          selection={true}
-                        />
-                      </div>
+                      {isIntroDocked && (
+                        <>
+                          <div className="h-16 w-full">
+                            <TechText
+                              text="Rafael Romelo"
+                              align="left"
+                              fontFamily="'Instrument Serif', Georgia, serif"
+                              fontSize={78}
+                              fontWeight={400}
+                              letterSpacing={-0.01}
+                              color={theme === 'dark' ? '#f2f1ee' : '#121316'}
+                              accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
+                              lineStyle="dashed"
+                              intro="metrics"
+                              introDuration={1.8}
+                              guides={false}
+                              labels={false}
+                              selection={true}
+                            />
+                          </div>
+                          <div className="h-14 w-full">
+                            <TechText
+                              text="Gibran"
+                              align="left"
+                              fontFamily="'Instrument Serif', Georgia, serif"
+                              fontSize={78}
+                              fontWeight={400}
+                              letterSpacing={-0.01}
+                              color={theme === 'dark' ? '#f2f1ee' : '#121316'}
+                              accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
+                              lineStyle="dashed"
+                              intro="metrics"
+                              introDuration={1.8}
+                              guides={false}
+                              labels={false}
+                              selection={true}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                     <motion.div
                       initial={{ opacity: 0, clipPath: 'inset(0 100% 0 0)' }}

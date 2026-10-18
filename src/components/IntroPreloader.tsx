@@ -69,7 +69,7 @@ export function IntroPreloader({ onComplete }: IntroPreloaderProps) {
           initial={{ opacity: 1 }}
           animate={{ opacity: phase === 'docking' ? 0 : 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.45, delay: phase === 'docking' ? 0.2 : 0, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--bg)] select-none pointer-events-none"
           aria-hidden="true"
         >
