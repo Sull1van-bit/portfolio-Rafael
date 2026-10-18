@@ -674,6 +674,10 @@ const createEngine = (
   const frame = (now: number) => {
     st.raf = 0;
     if (st.destroyed || !st.geo || st.period <= 0) return;
+    if (typeof window !== 'undefined' && window.innerWidth < 768 && st.last && now - st.last < 32) {
+      if (st.visible && !st.destroyed) st.raf = requestAnimationFrame(frame);
+      return;
+    }
     const cfg = config.current;
     const dt = st.last ? clamp((now - st.last) / 1000, 0, 0.1) : 0;
     st.last = now;

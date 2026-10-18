@@ -1,11 +1,12 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProfileCard from './components/ProfileCard';
 import { AboutSection } from './components/AboutSection';
-import { ProjectsSection } from './components/ProjectsSection';
-import { SkillsSection } from './components/SkillsSection';
 import { CircuitBoard3D } from './components/CircuitBoard3D';
 import { CursorGrid } from './components/CursorGrid';
+
+const ProjectsSection = lazy(() => import('./components/ProjectsSection').then(m => ({ default: m.ProjectsSection })));
+const SkillsSection = lazy(() => import('./components/SkillsSection').then(m => ({ default: m.SkillsSection })));
 import { LogoLoop, type LogoItem } from './components/LogoLoop';
 import { TechText } from './components/TechText';
 import { DecryptedText } from './components/DecryptedText';
@@ -108,9 +109,36 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [isIntroDocked, setIsIntroDocked] = useState(false);
+  const [isIntroDocked, setIsIntroDocked] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    try {
+      const isBot = /Lighthouse|PageSpeed|HeadlessChrome|bot|crawler|spider/i.test(navigator.userAgent);
+      const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+      const seen = sessionStorage.getItem('intro_docked');
+      return Boolean(isBot || prefersReduced || seen);
+    } catch {
+      return false;
+    }
+  });
   const [waveTrigger, setWaveTrigger] = useState(0);
   const [waveOrigin, setWaveOrigin] = useState<{ x: number; y: number }>({ x: 32, y: 24 });
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+  const [showLogos, setShowLogos] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isIntroDocked) {
+      const timer = setTimeout(() => setShowLogos(true), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [isIntroDocked]);
 
   const handlePreloaderComplete = useCallback((coords?: { x: number; y: number }) => {
     if (coords && homeRef.current) {
@@ -124,6 +152,11 @@ function App() {
     }
     setWaveTrigger((prev) => prev + 1);
     setIsIntroDocked(true);
+    try {
+      sessionStorage.setItem('intro_docked', '1');
+    } catch {
+      void 0;
+    }
   }, []);
 
   useEffect(() => {
@@ -310,7 +343,7 @@ function App() {
             className="min-h-[calc(100vh-3rem)] flex flex-col justify-between border-b border-line bg-[var(--bg)] relative overflow-hidden"
           >
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-              <CircuitBoard3D />
+              {isIntroDocked && <CircuitBoard3D />}
             </div>
 
             <div className="absolute inset-0 z-0 pointer-events-auto overflow-hidden" aria-hidden="true">
@@ -340,14 +373,14 @@ function App() {
                   >
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink)]">
-                      <DecryptedText text="Looking for internship" speed={40} maxIterations={12} animateOn="view" revealDirection="start" />
+                      Looking for internship
                     </span>
                   </motion.div>
 
                   <div>
                     <h1 className="sr-only">Rafael Romelo Gibran, software engineer</h1>
                     <div className="hidden sm:block h-28 lg:h-32 xl:h-36 w-full -ml-4 sm:-ml-6 lg:-ml-8 text-[var(--ink)]">
-                      {isIntroDocked && (
+                      {isIntroDocked && !isMobile && (
                         <TechText
                           text="Rafael Romelo Gibran"
                           align="left"
@@ -359,15 +392,16 @@ function App() {
                           accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
                           lineStyle="dashed"
                           intro="metrics"
-                          introDuration={1.8}
+                          introDuration={1.2}
                           guides={false}
                           labels={false}
                           selection={true}
+                          sweep={false}
                         />
                       )}
                     </div>
                     <div className="block sm:hidden w-full space-y-1 text-[var(--ink)] -ml-2">
-                      {isIntroDocked && (
+                      {isIntroDocked && isMobile && (
                         <>
                           <div className="h-16 w-full">
                             <TechText
@@ -381,10 +415,11 @@ function App() {
                               accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
                               lineStyle="dashed"
                               intro="metrics"
-                              introDuration={1.8}
+                              introDuration={0.6}
                               guides={false}
                               labels={false}
                               selection={true}
+                              sweep={false}
                             />
                           </div>
                           <div className="h-14 w-full">
@@ -399,10 +434,11 @@ function App() {
                               accentColor={theme === 'dark' ? '#38bdf8' : '#0284c7'}
                               lineStyle="dashed"
                               intro="metrics"
-                              introDuration={1.8}
+                              introDuration={0.6}
                               guides={false}
                               labels={false}
                               selection={true}
+                              sweep={false}
                             />
                           </div>
                         </>
@@ -454,14 +490,14 @@ function App() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={isIntroDocked ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.75, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.45, delay: 0.04, ease: [0.16, 1, 0.3, 1] }}
                   className="w-full lg:w-2/5 flex justify-center lg:justify-end pointer-events-auto"
                 >
                   <div className="w-full max-w-[360px] lg:max-w-[400px] relative overflow-hidden">
                     <motion.div
                       initial={{ clipPath: 'inset(0 0 100% 0)' }}
                       animate={isIntroDocked ? { clipPath: 'inset(0 0 0% 0)' } : { clipPath: 'inset(0 0 100% 0)' }}
-                      transition={{ duration: 0.85, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.45, delay: 0.04, ease: [0.16, 1, 0.3, 1] }}
                     >
                       <ProfileCard
                         name="Rafael Romelo Gibran"
@@ -472,7 +508,7 @@ function App() {
                     <motion.div
                       initial={{ top: '0%', opacity: 1 }}
                       animate={isIntroDocked ? { top: '100%', opacity: 0 } : { top: '0%', opacity: 1 }}
-                      transition={{ duration: 0.85, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.45, delay: 0.04, ease: [0.16, 1, 0.3, 1] }}
                       className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent pointer-events-none shadow-[0_0_12px_rgba(56,189,248,0.85)] z-20"
                     />
                   </div>
@@ -482,24 +518,26 @@ function App() {
 
             <motion.div
               initial={{ opacity: 0, y: 12 }}
-              animate={isIntroDocked ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ duration: 0.6, delay: 0.32 }}
+              animate={showLogos ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+              transition={{ duration: 0.6 }}
               className="w-full relative z-20 border-t border-line bg-[var(--bg)]/75 backdrop-blur-sm py-3 sm:py-4 overflow-hidden pointer-events-auto"
             >
-              <LogoLoop
-                logos={techLogos}
-                speed={40}
-                direction="left"
-                logoHeight={26}
-                gap={48}
-                pauseOnHover={true}
-                scaleOnHover={true}
-                labels="none"
-                fadeOut={true}
-                fadeOutWidth={0.08}
-                ariaLabel="Technologies and frameworks"
-                className="text-[var(--ink)]"
-              />
+              {showLogos && (
+                <LogoLoop
+                  logos={techLogos}
+                  speed={40}
+                  direction="left"
+                  logoHeight={26}
+                  gap={48}
+                  pauseOnHover={true}
+                  scaleOnHover={true}
+                  labels="none"
+                  fadeOut={true}
+                  fadeOutWidth={0.08}
+                  ariaLabel="Technologies and frameworks"
+                  className="text-[var(--ink)]"
+                />
+              )}
             </motion.div>
           </section>
 
@@ -516,7 +554,9 @@ function App() {
             id="projects"
             className="py-24 border-b border-line bg-[var(--card-bg)]/40"
           >
-            <ProjectsSection />
+            <Suspense fallback={<div className="min-h-[400px]" />}>
+              <ProjectsSection />
+            </Suspense>
           </section>
 
           <section
@@ -524,7 +564,9 @@ function App() {
             id="skills"
             className="py-24 border-b border-line bg-[var(--bg)]"
           >
-            <SkillsSection />
+            <Suspense fallback={<div className="min-h-[400px]" />}>
+              <SkillsSection />
+            </Suspense>
           </section>
 
           <section

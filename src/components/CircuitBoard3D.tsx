@@ -262,15 +262,17 @@ export function CircuitBoard3D() {
       ];
 
       pulses = [];
+      const isMobileDevice = width < 768;
       paths.forEach((p, pIdx) => {
-        const count = pIdx % 2 === 0 ? 2 : 1;
+        if (isMobileDevice && pIdx > 3) return;
+        const count = isMobileDevice ? 1 : (pIdx % 2 === 0 ? 2 : 1);
         for (let c = 0; c < count; c++) {
           const col = colors[(pIdx + c) % colors.length];
           pulses.push({
             pathIndex: pIdx,
             distance: (p.totalLength / count) * c + Math.random() * 80,
-            speed: 1.2 + Math.random() * 1.6,
-            length: 90 + Math.random() * 80,
+            speed: isMobileDevice ? 0.9 : 1.2 + Math.random() * 1.6,
+            length: isMobileDevice ? 50 : 90 + Math.random() * 80,
             color: col.color,
             headGlow: col.head,
           });
@@ -278,7 +280,7 @@ export function CircuitBoard3D() {
       });
 
       particles = [];
-      const particleCount = Math.floor(Math.min(width / 30, 48));
+      const particleCount = isMobileDevice ? 0 : Math.floor(Math.min(width / 30, 48));
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * width,
@@ -313,9 +315,22 @@ export function CircuitBoard3D() {
       return path.points[path.points.length - 1];
     };
 
+    let isDark = typeof document !== 'undefined' ? document.documentElement.getAttribute('data-theme') !== 'light' : true;
+    const themeObserver = new MutationObserver(() => {
+      isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
     let lastTime = performance.now();
+    let isVisible = true;
 
     const render = (now: number) => {
+      if (width < 768 && now - lastTime < 45) {
+        if (isVisible && !document.hidden) {
+          animationFrameId = requestAnimationFrame(render);
+        }
+        return;
+      }
       const dt = Math.min((now - lastTime) / 16.67, 2);
       lastTime = now;
 
@@ -323,8 +338,6 @@ export function CircuitBoard3D() {
       mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.05;
 
       ctx.clearRect(0, 0, width, height);
-
-      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
       ctx.save();
       ctx.translate(mouseRef.current.x, mouseRef.current.y);
@@ -398,7 +411,7 @@ export function CircuitBoard3D() {
         pulseGrad.addColorStop(1, '#ffffff');
 
         ctx.beginPath();
-        const steps = 14;
+        const steps = width < 768 ? 6 : 14;
         const stepDist = (Math.min(headDist, path.totalLength) - tailDist) / steps;
         for (let s = 0; s <= steps; s++) {
           const pt = getPointAtDistance(path, tailDist + s * stepDist);
@@ -412,12 +425,14 @@ export function CircuitBoard3D() {
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(headPt.x, headPt.y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = pulse.headGlow;
-        ctx.shadowBlur = 10;
+        ctx.arc(headPt.x, headPt.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = pulse.headGlow;
         ctx.fill();
-        ctx.shadowBlur = 0;
+
+        ctx.beginPath();
+        ctx.arc(headPt.x, headPt.y, 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
       }
 
       for (const p of particles) {
@@ -441,14 +456,54 @@ export function CircuitBoard3D() {
 
       ctx.restore();
 
-      animationFrameId = requestAnimationFrame(render);
+      if (isVisible && !document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+      } else {
+        animationFrameId = 0;
+      }
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    const startRender = () => {
+      if (!animationFrameId && isVisible && !document.hidden) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const stopRender = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopRender();
+      } else {
+        startRender();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    const io = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        startRender();
+      } else {
+        stopRender();
+      }
+    });
+    io.observe(canvas);
+
+    startRender();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopRender();
       window.removeEventListener('resize', buildGeometry);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      themeObserver.disconnect();
+      io.disconnect();
     };
   }, []);
 

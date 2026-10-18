@@ -76,6 +76,8 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
     let height = 0;
     let dpr = 1;
     let animId = 0;
+    let lastTime = performance.now();
+    let idleFrames = 0;
 
     let targetX = -1000;
     let targetY = -1000;
@@ -84,6 +86,14 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
     let isInside = false;
 
     const ripples: Ripple[] = [];
+
+    const wake = () => {
+      idleFrames = 0;
+      if (!animId) {
+        lastTime = performance.now();
+        animId = requestAnimationFrame(loop);
+      }
+    };
 
     const triggerWave = (ox?: number, oy?: number) => {
       const originX = ox ?? 32;
@@ -96,6 +106,7 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
         maxR: maxDistance,
         alpha: 0.95
       });
+      wake();
       setTimeout(() => {
         ripples.push({
           x: originX,
@@ -104,6 +115,7 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
           maxR: maxDistance,
           alpha: 0.65
         });
+        wake();
       }, 160);
     };
     triggerWaveRef.current = triggerWave;
@@ -117,6 +129,7 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
       canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
+      wake();
     };
 
     resize();
@@ -132,10 +145,12 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
         curY = targetY;
         isInside = true;
       }
+      wake();
     };
 
     const onPointerLeave = () => {
       isInside = false;
+      wake();
     };
 
     const onPointerDown = (e: PointerEvent) => {
@@ -151,15 +166,26 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
         alpha: 0.7
       });
       if (ripples.length > 8) ripples.shift();
+      wake();
     };
 
     container.addEventListener('pointermove', onPointerMove, { passive: true });
     container.addEventListener('pointerleave', onPointerLeave, { passive: true });
     container.addEventListener('pointerdown', onPointerDown, { passive: true });
 
-    let lastTime = performance.now();
-
-    const loop = (now: number) => {
+    function loop(now: number) {
+      if (!ctx) return;
+      const isMoving = Math.abs(targetX - curX) > 0.2 || Math.abs(targetY - curY) > 0.2;
+      const active = (isInside && isMoving) || ripples.length > 0;
+      if (!active && idleFrames > 3) {
+        animId = 0;
+        return;
+      }
+      if (!active) {
+        idleFrames++;
+      } else {
+        idleFrames = 0;
+      }
       animId = requestAnimationFrame(loop);
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
@@ -308,12 +334,12 @@ export const CursorGrid: React.FC<CursorGridProps> = ({
       }
 
       ctx.restore();
-    };
+    }
 
-    animId = requestAnimationFrame(loop);
+    wake();
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
       ro.disconnect();
       container.removeEventListener('pointermove', onPointerMove);
       container.removeEventListener('pointerleave', onPointerLeave);

@@ -753,6 +753,15 @@ export const TechText: React.FC<TechTextProps> = ({
     };
 
     const drawFilling = (glyph: GlyphData, lead: number, progress: number, view: WordLayout) => {
+      if (width < 640) {
+        const fill = clamp01((progress - 0.15 - 0.25 * lead) / 0.5);
+        if (fill > 0.001) {
+          ctx.globalAlpha = fill;
+          blit(ctx, glyph.fill, 0, 0, 0, 0);
+          ctx.globalAlpha = 1;
+        }
+        return;
+      }
       const art = glyph.fill;
       const left = Math.floor(art.left * dpr);
       const top = Math.floor(art.top * dpr);

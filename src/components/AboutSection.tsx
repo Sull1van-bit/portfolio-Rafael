@@ -105,6 +105,8 @@ export function AboutSection() {
               alt="HMIF UMN Logo"
               width={48}
               height={48}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-contain"
             />
           </div>
@@ -117,6 +119,8 @@ export function AboutSection() {
               alt="UMN Programming Club Logo"
               width={48}
               height={48}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-contain"
             />
           </div>
@@ -139,6 +143,8 @@ export function AboutSection() {
               alt="Radioactive UMN 2025 Logo"
               width={48}
               height={48}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-contain"
             />
           </div>
@@ -292,6 +298,8 @@ export function AboutSection() {
                   alt="Universitas Multimedia Nusantara Logo"
                   width={48}
                   height={48}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-contain"
                 />
               </div>

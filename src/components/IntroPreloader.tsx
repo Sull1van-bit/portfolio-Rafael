@@ -15,7 +15,7 @@ export function IntroPreloader({ onComplete }: IntroPreloaderProps) {
 
   useEffect(() => {
     const startTime = performance.now();
-    const duration = 850;
+    const duration = 240;
 
     const timer = setInterval(() => {
       const elapsed = performance.now() - startTime;
@@ -52,9 +52,9 @@ export function IntroPreloader({ onComplete }: IntroPreloaderProps) {
             onCompleteRef.current?.({ x: targetX, y: targetY });
             setTimeout(() => {
               setPhase('done');
-            }, 80);
-          }, 650);
-        }, 120);
+            }, 60);
+          }, 420);
+        }, 40);
       }
     }, 16);
 
@@ -69,13 +69,12 @@ export function IntroPreloader({ onComplete }: IntroPreloaderProps) {
           initial={{ opacity: 1 }}
           animate={{ opacity: phase === 'docking' ? 0 : 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.45, delay: phase === 'docking' ? 0.2 : 0, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.35, delay: phase === 'docking' ? 0.08 : 0, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--bg)] select-none pointer-events-none"
-          aria-hidden="true"
         >
           <motion.div
             ref={logoRef}
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 1 }}
             animate={
               phase === 'docking'
                 ? {
@@ -91,7 +90,7 @@ export function IntroPreloader({ onComplete }: IntroPreloaderProps) {
                     opacity: 1
                   }
             }
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
             className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center z-10 origin-center"
           >
             <svg
