@@ -1,1 +1,8 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="12" fill="#212121"/><rect x="16" y="16" width="8" height="32" fill="#32E0C4"/><rect x="24" y="16" width="16" height="8" fill="#32E0C4"/><rect x="40" y="24" width="8" height="8" fill="#32E0C4"/><rect x="24" y="32" width="16" height="8" fill="#32E0C4"/><rect x="40" y="40" width="8" height="8" fill="#32E0C4"/><rect x="48" y="8" width="8" height="8" fill="#0D7377"/><rect x="8" y="48" width="8" height="8" fill="#EEEEEE"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <g id="icon">
+    <path d="M128 80H288C358.686 80 416 137.314 416 208C416 261.272 383.398 306.918 337.285 326.111L416 432H336L268.421 336H208V432H128V80Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/>
+    <path d="M208 152H280C310.928 152 336 177.072 336 208C336 238.928 310.928 264 280 264H208V152Z" fill="var(--bg, #0b0b0c)"/>
+    <path d="M384 80L448 144V272L384 208V80Z" fill="currentColor" opacity="0.4"/>
+    <path d="M336 432L400 432L320 336L268 336L336 432Z" fill="currentColor" opacity="0.6"/>
+  </g>
+</svg>

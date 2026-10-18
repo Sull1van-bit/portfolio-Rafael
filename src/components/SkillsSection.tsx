@@ -1,109 +1,148 @@
 import { motion } from 'framer-motion';
 
 export function SkillsSection() {
-  const skills = {
-    "Frontend Development": [
-      { name: "React JS", level: 100 },
-      { name: "Next JS", level: 100 },
-      { name: "Kotlin", level: 90 },
-      { name: "React Native", level: 80 },
-      { name: "Vue JS", level: 70 }
-    ],
-    "Backend & Database": [
-     { name : "Node JS", level: 100},
-     { name: "Express JS", level: 100},
-     { name: "MySQL", level: 100},
-     { name: "Python", level: 90},
-     { name: "FastAPI", level: 90},
-     { name: "Golang", level: 85},
-     { name: "MongoDB", level: 80},
-     { name: "C/C++", level: 60},
-    ],
-    "Development Tools": [
-      { name: "Git", level: 100},
-      { name: "Postman", level: 100},
-      { name: "NPM/PNPM", level: 100},
-      { name: "N8N", level: 80},
-    ],
-    "DevOps": [
-      { name: "Docker", level: 80},
-      { name: "Kubernetes", level: 60},
-      { name: "AWS", level: 70},
-      { name: "GCP", level: 70},
-    ]
-  };
+  const skillCategories = [
+    {
+      index: "01",
+      category: "Programming Languages",
+      skills: ["JavaScript", "Python", "Go", "C/C++", "Kotlin", "C#"]
+    },
+    {
+      index: "02",
+      category: "Frameworks & Libraries",
+      skills: ["React", "Next.js", "Node.js", "Tailwind CSS"]
+    },
+    {
+      index: "03",
+      category: "Software & Tools",
+      skills: ["Git", "Docker", "Figma", "Linux", "Postman", "Hermes","Google Anti Gravity", "Android Studio", "Unity", "VS Code"]
+    },
+    {
+      index: "04",
+      category: "Leadership & Management",
+      skills: ["Team Leadership", "Project Management", "Strategic Planning", "Event Logistics", "Problem Solving", "Cross-functional Collaboration"]
+    }
+  ];
+
+  const awards = [
+    {
+      title: "Finalist of Sustainability Track",
+      event: "Garuda Hacks 6.0",
+      date: "July 2025",
+      note: "International finalist out of 400+ teams for LeftOver, a web application designed to reduce food waste in Indonesia."
+    }
+  ];
+
+  const languages = [
+    { name: "Indonesian", level: "Native or bilingual proficiency" },
+    { name: "English", level: "Professional working proficiency" }
+  ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
+        className="space-y-12"
       >
-        <h2 className="text-4xl font-bold mb-10 text-gray-900">Technical Expertise</h2>
+        <div className="space-y-4 border-b border-line pb-8">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] px-2.5 py-0.5 bg-[var(--invert-bg)] text-[var(--invert-fg)]">
+              Skills
+            </span>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(skills).map(([category, categorySkills], categoryIndex) => (
-            <motion.div
+          <h2 className="font-display text-3xl sm:text-5xl font-medium tracking-tight text-[var(--ink)]">
+            Technical toolkit &amp; <span className="font-serif italic font-normal text-[var(--muted)]">technologies.</span>
+          </h2>
+          <p className="text-[var(--muted)] text-sm sm:text-base max-w-xl leading-relaxed">
+            Some tools, technologies, and skills I've acquired throughout my journey.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 border border-line bg-[var(--card-bg)]">
+          {skillCategories.map(({ index, category, skills }) => (
+            <div
               key={category}
-              className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: categoryIndex * 0.1 }}
+              className="p-6 md:p-8 border-b border-line md:even:border-l last:border-b-0 md:nth-last-2:border-b-0 space-y-4"
             >
-              <h3 className="text-lg font-semibold mb-5 text-gray-900">{category}</h3>
-              <div className="space-y-4">
-                {categorySkills.map((skill, skillIndex) => (
-                  <motion.div
-                    key={skill.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: (categoryIndex * 0.1) + (skillIndex * 0.05) }}
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-lg font-medium text-[var(--ink)]">
+                  {category}
+                </h3>
+                <span className="font-mono text-[11px] text-[var(--muted)]">
+                  {index}
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="font-mono text-[11px] px-2.5 py-1 border border-line bg-[var(--bg)] text-[var(--muted)] hover:border-line-strong hover:text-[var(--ink)] transition-colors"
                   >
-                    <div className="flex justify-between mb-1.5">
-                      <span className="text-gray-700 text-sm">{skill.name}</span>
-                      <span className="text-gray-500 text-sm">{skill.level}%</span>
-                    </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <motion.div
-                        className="h-full bg-gradient-to-r from-gray-400 to-gray-600 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${skill.level}%` }}
-                        transition={{ duration: 0.8, delay: (categoryIndex * 0.1) + (skillIndex * 0.05) }}
-                      />
-                    </div>
-                  </motion.div>
+                    {skill}
+                  </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <div className="mt-14">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900">Certifications</h3>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 pt-2">
+          <div className="md:col-span-7 space-y-4">
+            <div className="border-b border-line pb-3">
+              <h3 className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+                Awards &amp; Recognition
+              </h3>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <motion.div
-              className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h4 className="text-lg font-semibold mb-1 text-gray-900">Full Stack Web Development Bootcamp</h4>
-              <p className="text-gray-500">Udemy</p>
-            </motion.div>
-            <motion.div
-              className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
-              <h4 className="text-lg font-semibold mb-1 text-gray-900">Finalist At Garuda Hacks 6.0</h4>
-              <p className="text-gray-500">Garuda Hacks</p>
-            </motion.div>
+            <div className="border border-line bg-[var(--card-bg)] p-6 space-y-2">
+              {awards.map((item, idx) => (
+                <div key={idx} className="space-y-2">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-display text-base font-medium text-[var(--ink)]">
+                        {item.title}
+                      </h4>
+                      <p className="font-mono text-xs text-[var(--muted)] mt-0.5">
+                        {item.event} &middot; {item.date}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-[var(--muted)] leading-relaxed">
+                    {item.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="md:col-span-5 space-y-4">
+            <div className="border-b border-line pb-3">
+              <h3 className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+                Languages
+              </h3>
+            </div>
+
+            <div className="border border-line bg-[var(--card-bg)] p-6 divide-y divide-line">
+              {languages.map((lang, idx) => (
+                <div key={idx} className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between">
+                  <span className="font-display text-sm font-medium text-[var(--ink)]">
+                    {lang.name}
+                  </span>
+                  <span className="font-mono text-xs text-[var(--muted)]">
+                    {lang.level}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>
     </div>
   );
 }
+
+export default SkillsSection;
