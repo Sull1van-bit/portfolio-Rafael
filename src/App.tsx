@@ -12,6 +12,11 @@ import { TechText } from './components/TechText';
 import { DecryptedText } from './components/DecryptedText';
 import { TransparentRuler } from './components/TransparentRuler';
 import { IntroPreloader } from './components/IntroPreloader';
+import { useRouter } from './lib/router';
+import { BlogList } from './components/blog/BlogList';
+import { BlogPostView } from './components/blog/BlogPostView';
+import { BlogWriter } from './components/blog/BlogWriter';
+import { BlogHomeSection } from './components/BlogHomeSection';
 import {
   FaBars,
   FaTimes,
@@ -24,7 +29,8 @@ import {
   FaSun,
   FaMoon,
   FaEnvelope,
-  FaMapMarkerAlt
+  FaMapMarkerAlt,
+  FaGoodreadsG
 } from 'react-icons/fa';
 import {
   SiReact,
@@ -103,7 +109,11 @@ function App() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
+  const blogRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+
+  const { path, navigate } = useRouter();
+  const isBlogRoute = path.startsWith('/blog');
 
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -112,6 +122,9 @@ function App() {
   const [isIntroDocked, setIsIntroDocked] = useState(() => {
     if (typeof window === 'undefined') return true;
     try {
+      if (window.location.pathname.startsWith('/blog') || window.location.hash.startsWith('#/blog')) {
+        return true;
+      }
       const isBot = /Lighthouse|PageSpeed|HeadlessChrome|bot|crawler|spider/i.test(navigator.userAgent);
       const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
       const seen = sessionStorage.getItem('intro_docked');
@@ -198,17 +211,66 @@ function App() {
     { id: 'about', label: 'About', ref: aboutRef },
     { id: 'projects', label: 'Projects', ref: projectsRef },
     { id: 'skills', label: 'Skills', ref: skillsRef },
-    { id: 'contact', label: 'Contact', ref: contactRef }
+    { id: 'blog', label: 'Blog', ref: blogRef },
+    { id: 'contact', label: 'Contact', ref: contactRef },
   ];
+
+  const handleNavClick = (item: (typeof navItems)[number]) => {
+    setIsMobileMenuOpen(false);
+    if (item.id === 'blog') {
+      navigate('/blog');
+      setActiveSection('blog');
+      return;
+    }
+
+    if (isBlogRoute) {
+      navigate('/');
+      setTimeout(() => {
+        if (item.ref?.current) {
+          item.ref.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else if (item.ref) {
+      scrollToSection(item.ref);
+    }
+  };
+
+  const handleLogoClick = () => {
+    if (isBlogRoute) {
+      navigate('/');
+    } else {
+      scrollToSection(homeRef);
+    }
+  };
+
+  const handleContactClick = () => {
+    if (isBlogRoute) {
+      navigate('/');
+      setTimeout(() => {
+        contactRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      scrollToSection(contactRef);
+    }
+  };
+
+  const isItemActive = (item: (typeof navItems)[number]) => {
+    if (isBlogRoute) {
+      return item.id === 'blog';
+    }
+    return activeSection === item.id;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isBlogRoute) return;
       const scrollPosition = window.scrollY + window.innerHeight / 3;
       const sections = [
         { id: 'home', ref: homeRef },
         { id: 'about', ref: aboutRef },
         { id: 'projects', ref: projectsRef },
         { id: 'skills', ref: skillsRef },
+        { id: 'blog', ref: blogRef },
         { id: 'contact', ref: contactRef },
       ];
 
@@ -226,7 +288,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isBlogRoute]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText('rafaelromelogibran400@gmail.com');
@@ -236,7 +298,7 @@ function App() {
 
   return (
     <div className="bg-[var(--bg)] text-[var(--ink)] min-h-screen relative font-display selection:bg-[var(--invert-bg)] selection:text-[var(--invert-fg)]">
-      {!isIntroDocked && (
+      {!isIntroDocked && !isBlogRoute && (
         <IntroPreloader
           onComplete={handlePreloaderComplete}
         />
@@ -249,13 +311,13 @@ function App() {
           <div className="flex min-w-0 items-stretch">
             <button
               type="button"
-              onClick={() => scrollToSection(homeRef)}
+              onClick={handleLogoClick}
               className="flex items-center gap-2.5 border-r border-line px-4 sm:px-5 font-mono text-xs font-bold tracking-wider text-[var(--ink)] hover:bg-[var(--invert-bg)] hover:text-[var(--invert-fg)] transition-colors cursor-pointer group"
             >
               <svg
                 id="site-nav-logo-icon"
                 className={`w-4 h-4 text-[var(--ink)] group-hover:text-[var(--invert-fg)] flex-shrink-0 transition-opacity duration-200 ${
-                  isIntroDocked ? 'opacity-100' : 'opacity-0'
+                  isIntroDocked || isBlogRoute ? 'opacity-100' : 'opacity-0'
                 }`}
                 viewBox="0 0 512 512"
                 fill="none"
@@ -275,9 +337,9 @@ function App() {
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => scrollToSection(item.ref)}
+                  onClick={() => handleNavClick(item)}
                   className={`flex items-center px-4 hud-label border-r border-line transition-colors cursor-pointer ${
-                    activeSection === item.id
+                    isItemActive(item)
                       ? 'bg-[var(--invert-bg)] text-[var(--invert-fg)]'
                       : 'text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)]/10'
                   }`}
@@ -309,7 +371,7 @@ function App() {
 
             <button
               type="button"
-              onClick={() => scrollToSection(contactRef)}
+              onClick={handleContactClick}
               className="inline-flex items-center justify-center font-mono font-bold uppercase tracking-[0.14em] text-[11px] bg-[var(--invert-bg)] text-[var(--invert-fg)] hover:opacity-85 transition-opacity px-5 border-l border-line cursor-pointer"
             >
               Get in touch
@@ -333,10 +395,23 @@ function App() {
         </div>
       </nav>
 
-      <TransparentRuler activeSection={activeSection} />
+      {!isBlogRoute && <TransparentRuler activeSection={activeSection} />}
 
       <div className="relative z-10">
-        <main id="main">
+        {path === '/blog/write' ? (
+          <BlogWriter onBack={() => navigate('/blog')} />
+        ) : path.startsWith('/blog/') ? (
+          <BlogPostView
+            slug={path.replace(/^\/blog\//, '').replace(/\/$/, '')}
+            onBack={() => navigate('/blog')}
+          />
+        ) : path === '/blog' ? (
+          <BlogList
+            onSelectPost={(slug) => navigate(`/blog/${slug}`)}
+            onOpenWriter={() => navigate('/blog/write')}
+          />
+        ) : (
+          <main id="main">
           <section
             ref={homeRef}
             id="home"
@@ -570,6 +645,18 @@ function App() {
           </section>
 
           <section
+            ref={blogRef}
+            id="blog"
+            className="py-24 border-b border-line bg-[var(--card-bg)]/40"
+          >
+            <BlogHomeSection
+              onSelectPost={(slug) => navigate(`/blog/${slug}`)}
+              onViewAll={() => navigate('/blog')}
+              onOpenWriter={() => navigate('/blog/write')}
+            />
+          </section>
+
+          <section
             ref={contactRef}
             id="contact"
             className="py-24 bg-[var(--card-bg)]/40"
@@ -682,12 +769,24 @@ function App() {
                         <FaInstagram className="w-4 h-4" />
                       </a>
                     </li>
+                    <li>
+                      <a
+                        href="https://www.goodreads.com/user/show/200930102"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit Rafael's Goodreads profile"
+                        className="w-9 h-9 border border-line flex items-center justify-center text-[var(--muted)] hover:text-[var(--ink)] hover:border-line-strong transition-colors cursor-pointer"
+                      >
+                        <FaGoodreadsG className="w-4 h-4" />
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </motion.div>
             </div>
           </section>
         </main>
+        )}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -721,11 +820,15 @@ function App() {
                     <button
                       key={index}
                       type="button"
-                      onClick={() => scrollToSection(item.ref)}
-                      className="flex items-center justify-between py-4 text-left w-full text-base font-mono uppercase tracking-wider text-[var(--ink)] hover:pl-2 transition-all cursor-pointer"
+                      onClick={() => handleNavClick(item)}
+                      className={`flex items-center justify-between py-4 text-left w-full text-base font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                        isItemActive(item)
+                          ? 'bg-[var(--invert-bg)] text-[var(--invert-fg)] px-3 font-bold'
+                          : 'text-[var(--ink)] hover:pl-2'
+                      }`}
                     >
                       <span>{item.label}</span>
-                      <span className="text-xs text-[var(--muted)]">0{index + 1}</span>
+                      <span className="text-xs opacity-70">0{index + 1}</span>
                     </button>
                   ))}
                 </div>

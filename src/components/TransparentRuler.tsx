@@ -14,6 +14,7 @@ const ALL_SECTIONS: SectionItem[] = [
   { id: 'about', label: 'ABOUT' },
   { id: 'projects', label: 'PROJECTS' },
   { id: 'skills', label: 'SKILLS' },
+  { id: 'blog', label: 'BLOG' },
   { id: 'contact', label: 'CONTACT' },
 ];
 
@@ -22,6 +23,7 @@ const SECTION_DISPLAY_NAMES: Record<string, string> = {
   about: 'ABOUT',
   projects: 'PROJECTS',
   skills: 'SKILLS',
+  blog: 'BLOG',
   contact: 'CONTACT',
 };
 
