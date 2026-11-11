@@ -2,5 +2,12 @@
   "rewrites": [
     { "source": "/admin/:path*", "destination": "/admin/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://rafael-romelo.is-a.dev/$1",
+      "permanent": true
+    }
   ]
 }
